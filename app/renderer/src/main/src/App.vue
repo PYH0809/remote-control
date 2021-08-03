@@ -11,6 +11,10 @@
 <script>
 import { onMounted, ref, onBeforeUnmount } from "vue";
 import {  QBtn } from 'quasar'
+import { createAnswer } from "../../../pages/control/peerPuppet";
+// import "../../../pages/control/peerPuppet"
+// import "./main.js"
+
 const ipcRenderer = window.electron.ipcRenderer;
 export default {
   name: 'App',
