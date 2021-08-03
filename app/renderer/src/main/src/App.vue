@@ -4,14 +4,7 @@
     <div>您的控制码：{{ code }}</div>
     <input type="number" placeholder="输入对方控制码" />
     <br />
-    <QBtn
-      class="qBtn"
-      color="white"
-      text-color="black"
-      label="远程控制"
-      size="22px"
-      @click="startContron"
-    ></QBtn>
+  <QBtn class="qBtn" color="white" text-color="black" label="远程控制" size="22px"  @click="startContron"></QBtn>
   </div>
   <h1 v-show="!show">{{ controlState }}</h1>
 </template>
@@ -20,7 +13,7 @@ import { onMounted, ref, onBeforeUnmount } from "vue";
 import { QBtn } from 'quasar';
 // import { ipcRenderer} from "electron"
 const { ipcRenderer } = window.require("electron");
-import "../../../pages/control/peerPuppet";
+// import "../../../pages/control/peerPuppet";
 
 // window.require("../../../pages/control/peerPuppet")
 // import "../../../pages/control/peerPuppet"
@@ -83,7 +76,7 @@ input {
 }
 .qBtn {
   margin-top: 10px;
-  width: 200px;
-  height: 50px;
+  width:200px;
+  height:50px;
 }
 </style>
