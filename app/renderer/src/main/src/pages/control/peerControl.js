@@ -1,25 +1,7 @@
 const EventEmitter = require("events")
 const peer = new EventEmitter()
-const { desktopCapturer, ipcRenderer } = require("electron")
-async function getScreenStream() {
-    const sources = await desktopCapturer.getSources({ types: ["screen"] })
-    navigator.webkitGetUserMedia({
-        audio: false,
-        video: {
-            mandatory: {
-                chromeMediaSource: "desktop",
-                chromeMediaSourceId: sources[0].id,
-                maxWidth: window.screen.width,
-                maxHeight: window.screen.height
-            }
-        },
-    }, (stream) => {
-        peer.emit("add-stream", stream)
-    }, (err) => {
-        console.error(err)
-    })
-}
-getScreenStream()
+const { ipcRenderer } = require("electron")
+
 peer.on("robot", (type, data) => {
     if (type == "key") {
         ipcRenderer.send("robot", type, data)
@@ -32,4 +14,25 @@ peer.on("robot", (type, data) => {
         ipcRenderer.send("robot", type, data)
     }
 })
+
+const pc = new window.RTCPeerConnection({})
+async function createOffer() {
+    const offer = await pc.createOffer({
+        offerToReceiveAudio: false,
+        offerToReceiveVideo: true
+    })
+    await pc.setLocalDescription(offer)
+    console.log(JSON.stringify(pc.localDescription))
+    return pc.localDescription
+}
+createOffer()
+
+async function setRemote(answer) {
+    await pc.setRemoteDescription(answer)
+}
+
+window.setRemote = setRemote
+pc.onaddstream = function (e) {
+    peer.emit("add-stream", e.stream)
+}
 module.exports = { peer }

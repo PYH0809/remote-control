@@ -21,7 +21,8 @@ import { QBtn } from 'quasar';
 // import { ipcRenderer} from "electron"
 // const { ipcRenderer } = window.require("electron");
 
-// import  { createAnswer } from "./peerPuppet.js";
+// import getScreenStream from "../control/peerPuppet.js";
+require("../control/peerPuppet.js")
 // import "./peerPuppet.js"
 
 const ipcRenderer = window.electron.ipcRenderer;
@@ -32,6 +33,7 @@ export default {
   },
   setup() {
     // createAnswer()
+    // console.log(getScreenStream)
     let code = ref(),
       show = ref(true),
       controlState = ref("")

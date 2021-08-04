@@ -1,5 +1,6 @@
-const { desktopCapturer } = require("electron")
-
+const { desktopCapturer } = window.require("electron")
+// const EventEmitter = require("events")
+// const peer = new EventEmitter()
 async function getScreenStream() {
     const sources = await desktopCapturer.getSources({ types: ["screen"] })
     return new Promise((resolve, reject) => {
@@ -20,15 +21,15 @@ async function getScreenStream() {
         })
     })
 }
+
+
 const pc = new window.RTCPeerConnection({})
 async function createAnswer(offer) {
     let screenStream = await getScreenStream()
-
     pc.addStream(screenStream)
     await pc.setRemoteDescription(offer)
     await pc.setLocalDescription(await pc.createAnswer())
-    console.log("answer", JSON.stringify(pc.localDescription))
+    console.log(JSON.stringify(pc.localDescription))
     return pc.localDescription
 }
 window.createAnswer = createAnswer
-module.exports={getScreenStream}

@@ -1,8 +1,11 @@
 const { peer } = require("./peerControl")
+
+var video = document.getElementById("screenVideo")
+
 peer.on("add-stream", (stream) => {
+    console.log("stream" + stream)
     play(stream)
 })
-var video = document.getElementById("screenVideo")
 
 function play(stream) {
     video.srcObject = stream
