@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from './pages/main/App.vue'
 import { Quasar } from 'quasar'
 import quasarUserOptions from './quasar-user-options'
 

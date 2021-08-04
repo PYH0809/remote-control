@@ -1,6 +1,6 @@
 const EventEmitter = require("events")
 const peer = new EventEmitter()
-const { desktopCapturer } = require("electron")
+const { desktopCapturer, ipcRenderer } = require("electron")
 async function getScreenStream() {
     const sources = await desktopCapturer.getSources({ types: ["screen"] })
     navigator.webkitGetUserMedia({
@@ -13,11 +13,23 @@ async function getScreenStream() {
                 maxHeight: window.screen.height
             }
         },
-    }, (stream) => {    
+    }, (stream) => {
         peer.emit("add-stream", stream)
     }, (err) => {
         console.error(err)
     })
 }
 getScreenStream()
-module.exports = {peer} 
+peer.on("robot", (type, data) => {
+    if (type == "key") {
+        ipcRenderer.send("robot", type, data)
+    }
+    if (type == "mouse") {
+        data.screen = {
+            width: window.screen.width,
+            height: window.screen.height
+        }
+        ipcRenderer.send("robot", type, data)
+    }
+})
+module.exports = { peer }

@@ -31,4 +31,4 @@ async function createAnswer(offer) {
     return pc.localDescription
 }
 window.createAnswer = createAnswer
-module.exports={createAnswer}
+module.exports={getScreenStream}

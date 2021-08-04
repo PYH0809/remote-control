@@ -13,7 +13,7 @@ create=()=>{
             // preload: path.join(__dirname, '../../preload.js')
         },
     })
-    win.loadFile(path.resolve(__dirname,"../../renderer/pages/control/index.html"))
+    win.loadFile(path.resolve(__dirname,"../../renderer/src/main/src/pages/control/index.html"))
 }
 send=(channel,...args)=>{
     win.webContents.send(channel,...args)
